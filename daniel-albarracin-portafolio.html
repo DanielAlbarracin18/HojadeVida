@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daniel Esteban Albarracín González — Portafolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F2EEE3;
+    --ink:#26241F;
+    --ink-soft:#716C5F;
+    --line: rgba(38,36,31,.14);
+    --accent:#3E4A66;
+    --accent2:#5B3A29;
+    --surface:#26241F;
+    --surface-ink:#F2EEE3;
+    --surface-soft: rgba(242,238,227,.68);
+    --pattern: none;
+    color-scheme: light;
+  }
+
+  body[data-mode="educador"]{
+    --bg:#E7EFDD;
+    --ink:#232F27;
+    --ink-soft:#5C665C;
+    --line: rgba(35,47,39,.16);
+    --accent:#B9862F;
+    --accent2:#9C4430;
+    --surface:#2F4438;
+    --surface-ink:#F1E4C4;
+    --surface-soft: rgba(241,228,196,.72);
+    --pattern: none;
+  }
+  body[data-mode="educador"] h1{color:#2F4438;}
+
+  body[data-mode="tecnico"]{
+    --bg:#10161A;
+    --ink:#E7EEEC;
+    --ink-soft:#8FA39F;
+    --line: rgba(231,238,236,.12);
+    --accent:#49C6B4;
+    --accent2:#E0A458;
+    --surface:#0A0F11;
+    --surface-ink:#CFF3EC;
+    --surface-soft: rgba(207,243,236,.68);
+    --pattern: radial-gradient(var(--line) 1px, transparent 1px);
+    color-scheme: dark;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background-color:var(--bg);
+    background-image:var(--pattern);
+    background-size: 100% 2.1em;
+    background-position: 0 7.4em;
+    color:var(--ink);
+    font-family:'Public Sans', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    transition:background-color .6s ease, color .6s ease;
+  }
+  body[data-mode="tecnico"]{ background-size: 26px 26px; }
+
+  a{color:var(--accent);}
+
+  #bg-canvas{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+  }
+
+  .rail{
+    position:fixed;
+    top:0; bottom:0;
+    left:64px;
+    width:3px;
+    background:var(--line);
+    z-index:2;
+  }
+  .rail-fill{
+    position:absolute;
+    top:0; left:0; width:100%;
+    height:0%;
+    background:var(--accent2);
+    transition:background-color .6s ease;
+  }
+  @media (max-width:640px){ .rail{left:22px;} }
+  body:not([data-mode]) .rail{display:none;}
+
+  .sheet{
+    max-width:760px;
+    margin:0 auto;
+    padding:4.5rem 2.5rem 5rem 96px;
+    position:relative;
+    z-index:1;
+  }
+  @media (max-width:640px){
+    .sheet{padding:3rem 1.2rem 3.5rem 46px;}
+  }
+
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .55s ease, transform .55s ease;}
+  .reveal.in{opacity:1; transform:none;}
+  @media (prefers-reduced-motion: reduce){ .reveal{opacity:1; transform:none; transition:none;} }
+
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size:3rem;
+    line-height:1.04;
+    margin:0 0 .5rem;
+    color:var(--ink);
+  }
+  .kicker{font-size:.85rem; color:var(--accent2); margin:0 0 .4rem; transition:color .6s ease;}
+
+  .contact-strip{
+    display:flex; flex-wrap:wrap; gap:.4rem 1.4rem;
+    font-size:.9rem; color:var(--ink-soft);
+  }
+
+  section{margin-bottom:3.1rem;}
+  .section-head{display:flex; align-items:baseline; gap:.7rem; margin-bottom:1.1rem;}
+  .tab{
+    font-family:'Fraunces', serif; font-size:1.6rem; font-weight:600;
+    color:var(--ink); white-space:nowrap; transition:color .6s ease;
+    padding-left:.9rem; border-left:5px solid var(--accent2);
+  }
+  .section-head::after{content:""; flex:1; height:1px; background:var(--line);}
+  p{margin:0 0 .9rem; max-width:64ch;}
+  p:last-child{margin-bottom:0;}
+  .lede{font-size:1.05rem; color:var(--ink-soft); max-width:56ch;}
+
+  /* ============ FORK (landing) ============ */
+  .fork-wrap{max-width:none; margin:0; padding:0; position:relative; z-index:1; min-height:100vh; display:flex; flex-direction:column;}
+  .fork-header{max-width:680px; margin:0 auto; padding:4.2rem 2rem 2.6rem; text-align:left;}
+  .fork-header-inner{display:flex; align-items:center; gap:1.6rem; flex-wrap:wrap;}
+  .profile-photo{
+    width:96px; height:96px; border-radius:50%; object-fit:cover; object-position:65% 50%; flex:none;
+    border:3px solid var(--accent2); background:var(--line);
+  }
+  .profile-photo-sm{
+    width:56px; height:56px; border-radius:50%; object-fit:cover; object-position:65% 50%; flex:none;
+    border:2.5px solid var(--accent2); background:var(--line); margin-bottom:.9rem;
+  }
+  .fork-header h1{font-size:3.1rem;}
+  .fork-header .fork-lead{margin-top:1.1rem; font-size:1.1rem; color:var(--ink-soft); max-width:52ch;}
+  .fork-panels{display:grid; grid-template-columns:1fr 1fr; gap:0; flex:1; min-height:32rem;}
+  @media (max-width:760px){ .fork-panels{grid-template-columns:1fr;} }
+
+  .fork-panel{
+    text-align:left; border:none; cursor:pointer; font-family:inherit;
+    padding:3rem 2.4rem; display:flex; flex-direction:column; gap:1rem;
+    position:relative; overflow:hidden;
+    transition:padding .3s ease;
+  }
+  .fork-panel::before{
+    content:attr(data-letter);
+    position:absolute; right:-.3rem; bottom:-2.6rem;
+    font-family:'Fraunces', serif; font-weight:700; font-size:22rem; line-height:1;
+    opacity:.07; pointer-events:none; transition:opacity .3s ease, transform .4s ease;
+  }
+  .fork-panel:hover{padding-left:2.9rem;}
+  .fork-panel:hover::before{opacity:.14; transform:translateY(-8px);}
+  .fork-panel[data-enter="educador"]{
+    background:
+      radial-gradient(120% 90% at 88% 8%, rgba(185,134,47,.22), transparent 60%),
+      #F6F1E1;
+    color:#232F27;
+    border-top:6px solid #2F4438;
+  }
+  .fork-panel[data-enter="educador"]::before{
+    content:'';
+    position:absolute; width:28rem; height:26rem; right:-7rem; bottom:-9rem;
+    border-radius:42% 58% 63% 37% / 41% 45% 55% 59%;
+    background:radial-gradient(circle at 32% 28%, rgba(185,134,47,.45), rgba(47,68,56,.18) 72%);
+    filter:blur(1px);
+    pointer-events:none; z-index:0; opacity:1; transition:transform .4s ease;
+  }
+  .fork-panel[data-enter="educador"]:hover::before{transform:scale(1.05) rotate(4deg);}
+  .fork-panel[data-enter="educador"] .fork-eyebrow,
+  .fork-panel[data-enter="educador"] h2{position:relative; z-index:1;}
+  .fork-illustration{
+    position:absolute; right:-1.4rem; bottom:-1.6rem; width:15rem; height:auto;
+    opacity:.9; pointer-events:none; transition:transform .4s ease; z-index:1;
+  }
+  .fork-panel[data-enter="educador"]:hover .fork-illustration{transform:translateY(-6px) rotate(-2deg);}
+  .fork-illustration .leaf{transform-origin:bottom center; transform-box:fill-box; animation:sway 5s ease-in-out infinite;}
+  .fork-illustration .leaf.l2{animation-delay:.6s;}
+  .fork-illustration .leaf.l3{animation-delay:1.2s;}
+  @keyframes sway{
+    0%,100%{transform:rotate(-3deg);}
+    50%{transform:rotate(3deg);}
+  }
+  @media (prefers-reduced-motion: reduce){ .fork-illustration .leaf{animation:none;} }
+  .fork-panel[data-enter="tecnico"]{
+    background:#0F1618; color:#E7EEEC;
+    background-image:radial-gradient(rgba(231,238,236,.12) 1px, transparent 1px);
+    background-size:22px 22px;
+    border-top:6px solid #49C6B4;
+  }
+  .fork-panel[data-enter="tecnico"]::before{color:#49C6B4;}
+  .fork-panel .fork-eyebrow{font-size:.8rem; opacity:.75; letter-spacing:.02em;}
+  .fork-panel h2{font-family:'Fraunces', serif; font-size:2.6rem; font-weight:700; margin:0; line-height:1.02;}
+  .fork-panel[data-enter="educador"] h2{color:#9C4430;}
+  .fork-panel[data-enter="tecnico"] h2{color:#49C6B4;}
+  .fork-panel p{font-size:1rem; opacity:.85; max-width:36ch; margin:0; position:relative; z-index:1;}
+  .fork-panel .fork-cta{
+    margin-top:auto; font-size:.92rem; font-weight:700;
+    padding:.8rem 1.3rem; border-radius:999px; display:inline-block; width:fit-content;
+    position:relative; z-index:1; transition:transform .2s ease, background-color .2s ease, color .2s ease;
+  }
+  .fork-panel[data-enter="educador"] .fork-cta{background:#2F4438; color:#F1E4C4;}
+  .fork-panel[data-enter="tecnico"] .fork-cta{background:#49C6B4; color:#0A0F11;}
+  .fork-panel:hover .fork-cta{transform:translateX(4px);}
+  .fork-footer{margin:0 auto; padding:1.6rem 2rem 2.4rem; font-size:.82rem; color:var(--ink-soft); max-width:680px; display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;}
+
+  .anexo-global-btn{
+    position:fixed; top:1.4rem; right:1.6rem; z-index:20;
+    font:inherit; font-family:'IBM Plex Mono', monospace; font-size:.8rem; font-weight:700;
+    letter-spacing:.01em; color:var(--surface-ink); background:var(--accent2);
+    border:none; border-radius:999px; padding:.6rem 1.2rem; cursor:pointer; white-space:nowrap;
+    box-shadow:0 6px 18px rgba(0,0,0,.18);
+    transition:transform .15s ease, opacity .2s ease;
+  }
+  .anexo-global-btn:hover{transform:translateY(-1px); opacity:.9;}
+  @media (max-width:640px){
+    .anexo-global-btn{top:.9rem; right:.9rem; font-size:.72rem; padding:.5rem .9rem;}
+  }
+
+  body[data-mode] .fork-wrap{display:none;}
+  .portfolio{display:none;}
+  body[data-mode="educador"] #portfolio-educador{display:block;}
+  body[data-mode="tecnico"] #portfolio-tecnico{display:block;}
+
+  /* ============ Portfolio top bar ============ */
+  .topbar{
+    max-width:760px; margin:0 auto; padding:1.6rem 2.5rem 0 96px;
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:.85rem; position:relative; z-index:1;
+  }
+  @media (max-width:640px){ .topbar{padding:1.4rem 1.2rem 0 46px;} }
+  .back-btn{
+    font:inherit; font-size:.84rem; font-weight:600; color:var(--ink-soft);
+    background:none; border:1.5px solid var(--ink-soft); border-radius:999px;
+    padding:.4rem 1rem; cursor:pointer; transition:color .2s ease, border-color .2s ease, background-color .2s ease;
+  }
+  .back-btn:hover{color:var(--surface-ink); border-color:var(--accent2); background:var(--accent2);}
+  .track-label{
+    font-family:'IBM Plex Mono', monospace; font-size:.72rem; font-weight:600; color:var(--surface-ink);
+    background:var(--accent2); padding:.35rem .8rem; border-radius:999px; transition:background-color .6s ease, color .6s ease;
+  }
+
+  .role{font-size:1.1rem; color:var(--ink-soft); margin:.4rem 0 1.6rem; max-width:42ch; min-height:2.4em;}
+  .role .cursor{opacity:.6;}
+
+  .contact-strip.with-rule{padding-bottom:1.8rem; margin-bottom:2.2rem; border-bottom:1px solid var(--line);}
+
+  /* ---- Skills grid ---- */
+  .skills{display:grid; grid-template-columns:1fr 1fr; gap:1rem 1.4rem; padding:0; margin:0; counter-reset:skill;}
+  @media (max-width:520px){ .skills{grid-template-columns:1fr;} }
+  .skills li{
+    list-style:none; font-size:.92rem; padding:0 0 0 2.6rem; position:relative;
+    min-height:2.1rem; color:var(--ink-soft); counter-increment:skill;
+  }
+  .skills li::before{
+    content:counter(skill,decimal-leading-zero);
+    position:absolute; left:0; top:-.15rem;
+    font-family:'IBM Plex Mono', monospace; font-size:.78rem; font-weight:600;
+    width:2rem; height:2rem; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--accent2); color:var(--surface-ink);
+    transition:background-color .6s ease, color .6s ease;
+  }
+  .skills li strong{display:block; font-size:.98rem; color:var(--ink); margin-bottom:.15rem; font-weight:700;}
+
+  /* ---- Note / aside ---- */
+  .note{
+    border-left:2px solid var(--accent2); padding:.2rem 0 .2rem 1.1rem;
+    font-size:.94rem; color:var(--ink-soft); margin:1.2rem 0 0;
+  }
+
+  /* ---- Timeline entries ---- */
+  .entry{display:grid; grid-template-columns:11.5em 1fr; gap:1rem; padding:1.1rem 0; border-top:1px dashed var(--line);}
+  .entry:first-child{border-top:none;}
+  @media (max-width:640px){ .entry{grid-template-columns:1fr; gap:.5rem;} }
+  .entry .when{
+    font-size:.76rem; font-weight:700; color:var(--surface-ink); background:var(--accent2);
+    padding:.3rem .7rem; border-radius:999px; text-align:center; align-self:start;
+    transition:background-color .6s ease, color .6s ease;
+  }
+  .entry .what strong{display:block; font-size:1.08rem; color:var(--ink); margin-bottom:.15rem; font-weight:700;}
+  .entry .what span.org{display:block; font-size:.88rem; color:var(--ink-soft); margin-bottom:.3rem;}
+  .entry .what p{font-size:.92rem; color:var(--ink-soft);}
+
+  /* ---- Cursos ---- */
+  .course-list{list-style:none; margin:0; padding:0; display:grid; gap:.55rem;}
+  .course-list li{font-size:.92rem; padding-left:1.1rem; position:relative; color:var(--ink-soft);}
+  .course-list li::before{content:"—"; position:absolute; left:0; color:var(--accent2);}
+
+  /* ---- Certificados y soportes ---- */
+  .docs-list{list-style:none; margin:0; padding:0; display:grid; gap:.6rem;}
+  .docs-list a{
+    display:flex; align-items:center; gap:.7rem; text-decoration:none; color:var(--ink);
+    font-size:.92rem; padding:.7rem .9rem; border:1px solid var(--line); border-radius:6px;
+    transition:border-color .2s ease, background-color .2s ease;
+  }
+  .docs-list a:hover{border-color:var(--accent2); background:var(--surface-soft);}
+  .docs-list a::before{
+    content:"PDF"; font-family:'IBM Plex Mono', monospace; font-size:.66rem; font-weight:700;
+    color:var(--surface-ink); background:var(--accent2); padding:.2rem .4rem; border-radius:4px; flex:none;
+    transition:background-color .6s ease, color .6s ease;
+  }
+
+  /* ---- Botón "ver anexo completo" (junto a los títulos de sección) ---- */
+  .anexo-btn{
+    font-family:'IBM Plex Mono', monospace; font-size:.68rem; font-weight:700;
+    letter-spacing:.01em; color:var(--accent2); background:none;
+    border:1.5px solid var(--accent2); border-radius:999px;
+    padding:.32rem .85rem; cursor:pointer; white-space:nowrap; flex:none;
+    transition:background-color .2s ease, color .2s ease, transform .15s ease;
+  }
+  .anexo-btn:hover{background:var(--accent2); color:var(--surface-ink); transform:translateY(-1px);}
+  @media (max-width:520px){ .anexo-btn{font-size:.62rem; padding:.28rem .65rem;} }
+
+  /* ---- Modal de anexo (formación, experiencia y soportes, todo junto) ---- */
+  .anexo-overlay{
+    position:fixed; inset:0; z-index:50; display:flex; align-items:flex-start; justify-content:center;
+    padding:5vh 1.2rem; background:rgba(20,18,14,.55); backdrop-filter:blur(2px);
+    opacity:0; pointer-events:none; transition:opacity .22s ease;
+  }
+  .anexo-overlay.open{opacity:1; pointer-events:auto;}
+  .anexo-modal{
+    background:var(--bg); color:var(--ink); max-width:640px; width:100%; max-height:88vh;
+    border-radius:10px; border:1px solid var(--line); box-shadow:0 24px 60px rgba(0,0,0,.35);
+    display:flex; flex-direction:column; overflow:hidden;
+    transform:translateY(10px); transition:transform .22s ease;
+  }
+  .anexo-overlay.open .anexo-modal{transform:translateY(0);}
+  .anexo-head{
+    display:flex; align-items:center; justify-content:space-between; gap:1rem;
+    padding:1.3rem 1.5rem; border-bottom:1px solid var(--line); flex:none;
+  }
+  .anexo-head h2{font-family:'Fraunces', serif; font-size:1.3rem; font-weight:700; margin:0; color:var(--ink);}
+  .anexo-close{
+    font:inherit; font-size:1rem; line-height:1; background:none; border:1.5px solid var(--ink-soft);
+    color:var(--ink-soft); width:2.1rem; height:2.1rem; border-radius:50%; cursor:pointer; flex:none;
+    transition:color .2s ease, border-color .2s ease, background-color .2s ease;
+  }
+  .anexo-close:hover{color:var(--surface-ink); border-color:var(--accent2); background:var(--accent2);}
+  .anexo-body{overflow-y:auto; padding:1.3rem 1.5rem 1.8rem;}
+  .anexo-group{margin-bottom:1.6rem;}
+  .anexo-group:last-child{margin-bottom:0;}
+  .anexo-group-title{
+    font-family:'IBM Plex Mono', monospace; font-size:.72rem; font-weight:700; letter-spacing:.03em;
+    text-transform:uppercase; color:var(--accent2); margin:0 0 .8rem;
+  }
+  .anexo-item{padding:.8rem 0; border-top:1px dashed var(--line);}
+  .anexo-group-title + .anexo-item{border-top:none;}
+  .anexo-item .when{
+    display:inline-block; font-size:.72rem; font-weight:700; color:var(--surface-ink); background:var(--accent2);
+    padding:.22rem .6rem; border-radius:999px; margin-bottom:.35rem;
+  }
+  .anexo-item strong{display:block; font-size:1rem; color:var(--ink); font-weight:700;}
+  .anexo-item .org{display:block; font-size:.85rem; color:var(--ink-soft); margin-bottom:.3rem;}
+  .anexo-item p{font-size:.9rem; color:var(--ink-soft); margin:0;}
+  .anexo-item a.anexo-doclink{
+    display:inline-flex; align-items:center; gap:.4rem; margin-top:.5rem; font-size:.84rem;
+    font-weight:600; color:var(--accent2); text-decoration:none;
+  }
+  .anexo-item a.anexo-doclink:hover{text-decoration:underline;}
+
+  /* ---- Proyecto destacado + mini demo ---- */
+  .project-list{display:grid; gap:1.1rem;}
+  .project{
+    background:var(--surface); color:var(--surface-soft); border-radius:4px;
+    padding:2.1rem 2.2rem; position:relative; overflow:hidden; transition:background-color .6s ease;
+    border-top:5px solid var(--accent);
+  }
+  .project h3{font-family:'Fraunces', serif; font-size:1.65rem; font-weight:700; margin:0 0 .7rem; color:var(--surface-ink); transition:color .6s ease;}
+  .project p{color:var(--surface-soft); font-size:.95rem; max-width:56ch;}
+  .project .field-label{font-family:'IBM Plex Mono', monospace; font-size:.72rem; color:var(--accent); margin:1.1rem 0 .3rem; transition:color .6s ease;}
+  .project-link{
+    display:inline-flex; align-items:center; gap:.4rem; margin-top:1.1rem; font-size:.85rem; font-weight:700;
+    color:var(--surface-ink); text-decoration:none; border:1.5px solid var(--accent); border-radius:999px;
+    padding:.5rem 1rem; transition:background-color .2s ease, color .2s ease;
+  }
+  .project-link:hover{background:var(--accent); color:var(--surface);}
+
+  /* ---- Referencias (flip cards) ---- */
+  .refs{display:grid; grid-template-columns:1fr 1fr; gap:1rem 1.4rem;}
+  @media (max-width:640px){ .refs{grid-template-columns:1fr;} }
+  .ref-flip{perspective:800px; height:5.4rem;}
+  .ref-card{position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform .5s cubic-bezier(.2,.7,.3,1); cursor:pointer;}
+  .ref-flip.flipped .ref-card{transform:rotateY(180deg);}
+  .ref-face{position:absolute; inset:0; backface-visibility:hidden; border-top:1px dashed var(--line); padding:.8rem .2rem; display:flex; flex-direction:column; justify-content:center;}
+  .ref-face strong{font-size:.95rem;}
+  .ref-face span{display:block; font-size:.85rem; color:var(--ink-soft);}
+  .ref-back{transform:rotateY(180deg);}
+  .ref-back .phone{font-family:'IBM Plex Mono', monospace; color:var(--accent2); font-size:1rem;}
+  .ref-hint{font-size:.72rem; color:var(--ink-soft); opacity:.7;}
+
+  footer.page-footer{
+    max-width:760px; margin:0 auto; padding:1.5rem 2.5rem 3rem 96px;
+    border-top:1px solid var(--line); font-size:.82rem; color:var(--ink-soft);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:.5rem; position:relative; z-index:1;
+  }
+  @media (max-width:640px){ footer.page-footer{padding:1.5rem 1.2rem 3rem 46px;} }
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+<div class="rail" aria-hidden="true"><div class="rail-fill" id="railFill"></div></div>
+
+<!-- ============ FORK: elegir portafolio ============ -->
+<div class="fork-wrap" id="fork">
+  <div class="fork-header">
+    <div class="fork-header-inner">
+      <img src="recursos/perfil.jpeg" alt="Foto de Daniel Esteban Albarracín González" class="profile-photo" onerror="this.style.display='none'">
+      <div>
+        <p class="kicker">Hoja de vida interactiva</p>
+        <h1>Daniel Esteban<br>Albarracín González</h1>
+      </div>
+    </div>
+    <div class="contact-strip">
+      <span>322 337 5905</span>
+      <span>Daniel.albarracín300@gmail.com</span>
+      <span>Soacha, Cundinamarca</span>
+    </div>
+    <p class="fork-lead">Vengo de la salud, paso por la técnica y hoy estudio para enseñar. Son dos perfiles distintos, cada uno con su propio portafolio — elige con cuál empezar.</p>
+  </div>
+
+  <div class="fork-panels">
+    <button type="button" class="fork-panel" data-enter="educador" data-letter="E">
+      <span class="fork-eyebrow">Perfil</span>
+      <h2>Educador</h2>
+      <p>Formación en pedagogía y diseño de ambientes de aprendizaje, con el proyecto de aula Tienda Educativa como caso central.</p>
+      <span class="fork-cta">Ver su portafolio</span>
+      <svg class="fork-illustration" viewBox="0 0 220 200" aria-hidden="true">
+        <path d="M20 150 C 60 132, 100 132, 108 150 L 108 60 C 100 44, 60 44, 20 60 Z" fill="none" stroke="#2F4438" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M196 150 C 156 132, 116 132, 108 150 L 108 60 C 116 44, 156 44, 196 60 Z" fill="none" stroke="#2F4438" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M32 74 C 62 64, 88 64, 108 76" fill="none" stroke="#2F4438" stroke-width="2" opacity=".55"/>
+        <path d="M32 96 C 62 86, 88 86, 108 98" fill="none" stroke="#2F4438" stroke-width="2" opacity=".55"/>
+        <path d="M184 74 C 154 64, 128 64, 108 76" fill="none" stroke="#2F4438" stroke-width="2" opacity=".55"/>
+        <path d="M184 96 C 154 86, 128 86, 108 98" fill="none" stroke="#2F4438" stroke-width="2" opacity=".55"/>
+        <g class="leaf l1">
+          <path d="M108 78 C 108 48, 108 30, 108 10" fill="none" stroke="#9C4430" stroke-width="3" stroke-linecap="round"/>
+          <path d="M108 34 C 90 26, 78 32, 74 46 C 92 50, 104 46, 108 34 Z" fill="#B9862F"/>
+        </g>
+        <g class="leaf l2">
+          <path d="M108 46 C 126 38, 138 44, 142 58 C 124 62, 112 58, 108 46 Z" fill="#2F4438"/>
+        </g>
+        <g class="leaf l3">
+          <path d="M108 24 C 96 16, 86 20, 82 32 C 96 36, 104 32, 108 24 Z" fill="#B9862F" opacity=".85"/>
+        </g>
+      </svg>
+    </button>
+    <button type="button" class="fork-panel" data-enter="tecnico" data-letter="T">
+      <span class="fork-eyebrow">Perfil</span>
+      <h2>Técnico y administrativo</h2>
+      <p>Formación técnica en salud y en sistemas agropecuarios, experiencia laboral y cursos certificados — más la programación de aplicaciones, aprendida por cuenta propia.</p>
+      <span class="fork-cta">Ver su portafolio</span>
+    </button>
+  </div>
+
+  <p class="fork-footer">
+    <span>Puedes cambiar de perfil en cualquier momento desde el botón "volver" en la parte superior.</span>
+  </p>
+  <button type="button" class="anexo-global-btn" data-anexo-open>Estudios y experiencia →</button>
+</div>
+
+<!-- ============ PORTAFOLIO: EDUCADOR ============ -->
+<div class="portfolio" id="portfolio-educador">
+  <div class="topbar">
+    <button type="button" class="back-btn" data-back>Ver ambos perfiles</button>
+    <span class="track-label">Perfil · Educador — su portafolio</span>
+  </div>
+
+  <div class="sheet">
+    <section class="reveal in">
+      <img src="recursos/perfil.jpeg" alt="Foto de Daniel Esteban Albarracín González" class="profile-photo-sm" onerror="this.style.display='none'">
+      <p class="kicker">Hoja de vida</p>
+      <h1>Daniel Esteban<br>Albarracín González</h1>
+      <p class="role" id="roleText-educador">Educador en formación que también programa aplicaciones por cuenta propia.<span class="cursor">▌</span></p>
+      <div class="contact-strip with-rule">
+        <span>322 337 5905</span>
+        <span>Daniel.albarracín300@gmail.com</span>
+        <span>Soacha, Cundinamarca</span>
+      </div>
+    </section>
+
+    <section id="edu-perfil" class="reveal in">
+      <div class="section-head"><span class="tab">Enfoque pedagógico</span></div>
+      <p class="lede">Curso Pedagogía en la Universidad Pedagógica Nacional, con una base previa en Licenciatura en Educación Religiosa. Enfoco mi práctica en estrategias que fomentan la autonomía y el hábito de estudio.</p>
+      <ul class="skills">
+        <li><strong>Observación didáctica</strong>Acompañamiento en procesos de básica primaria.</li>
+        <li><strong>Diseño de ambientes de aprendizaje</strong>Espacios y dinámicas orientadas a la autonomía.</li>
+        <li><strong>Manejo de grupos</strong>Escucha activa, trasladada desde el sector salud al aula.</li>
+        <li><strong>Autoría de proyectos de aula</strong>Diseño del proyecto Tienda Educativa, abajo.</li>
+      </ul>
+    </section>
+
+    <section id="edu-formacion" class="reveal in">
+      <div class="section-head"><span class="tab">Formación académica</span></div>
+      <div class="entry">
+        <div class="when">En curso</div>
+        <div class="what">
+          <strong>Pedagogía</strong>
+          <span class="org">Universidad Pedagógica Nacional</span>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="when">Base formativa</div>
+        <div class="what">
+          <strong>Licenciatura en Educación Religiosa</strong>
+          <span class="org">Corporación Universitaria Adventista</span>
+        </div>
+      </div>
+      <p class="note">Mi formación técnica previa en salud y sistemas —incluida en el otro portafolio— es también donde aprendí a sostener la atención de un grupo y a explicar procesos paso a paso, algo que hoy traslado al aula.</p>
+    </section>
+
+    <section id="edu-proyecto" class="reveal in">
+      <div class="section-head"><span class="tab">Proyectos de aula</span></div>
+      <div class="project-list">
+        <div class="project">
+          <h3>Tienda Educativa</h3>
+          <p>Un sistema de recompensas para motivar a los niños a construir hábitos de estudio, disciplina y autonomía en su proceso de aprendizaje: acumulan puntos por cumplir tareas y los canjean semanalmente por útiles o beneficios en la jornada escolar. El objetivo pedagógico es que el logro se sienta tangible y propio.</p>
+        </div>
+
+        <div class="project">
+          <h3>Aprendizaje a partir de los intereses del estudiante</h3>
+          <p>Diseñé una lógica para incorporar al proceso de aprendizaje lo que le importa a cada niño — su religión, el equipo del que es hincha, sus gustos y favoritos — de modo que el contenido se conecte con algo propio y sea más fácil de entender, recordar y disfrutar.</p>
+        </div>
+
+        <div class="project">
+          <h3>Herramientas de asimilación y memorización</h3>
+          <p>Pensé varias herramientas orientadas a que los contenidos sean fáciles de entender y de recordar, buscando que lo aprendido no se quede en la teoría, sino que pueda emplearse de manera apropiada en un plano práctico.</p>
+        </div>
+
+        <div class="project">
+          <h3>Torneos de estudio</h3>
+          <p>Diseñé una lógica para poner el aprendizaje a circular entre los estudiantes: unos dan pistas a otros y a la vez contribuyen al aprendizaje de sus compañeros, de modo que el proceso se vuelve social y, a mediano plazo, el conocimiento se arraiga.</p>
+        </div>
+
+        <div class="project">
+          <h3>Modelo administrativo de sostenibilidad</h3>
+          <p>Diseñé una lógica administrativa para hacer sostenible la atención educativa de los niños en cualquier condición socioeconómica, integrando a varios actores y aliados — empresas, colegios, iglesias y padres — de forma que se fortalezca el tejido social y haya retorno para todos los que participan.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="edu-cursos" class="reveal in">
+      <div class="section-head"><span class="tab">Formación complementaria</span></div>
+      <ul class="course-list">
+        <li>Ruta del Emprendimiento — Centros del Valle del Software (54 horas)</li>
+      </ul>
+    </section>
+
+    <section id="edu-soportes" class="reveal in">
+      <div class="section-head"><span class="tab">Certificados y soportes</span></div>
+      <ul class="docs-list">
+        <li><a href="recursos/Notas%20Upn.pdf" target="_blank" rel="noopener">Notas académicas — Universidad Pedagógica Nacional</a></li>
+        <li><a href="recursos/Constancia%20de%20registro.pdf" target="_blank" rel="noopener">Constancia de registro</a></li>
+        <li><a href="recursos/CC%201007107862%20Certificado%20de%20estudio.pdf" target="_blank" rel="noopener">Certificado de estudio — Licenciatura en Educación Religiosa</a></li>
+        <li><a href="recursos/Certificado_CVS_ACTO%20(1).pdf" target="_blank" rel="noopener">Certificado de emprendedor</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <footer class="page-footer">
+    <span>Daniel Esteban Albarracín González</span>
+    <span>Soacha, Cundinamarca — Colombia</span>
+  </footer>
+</div>
+
+<!-- ============ PORTAFOLIO: TÉCNICO ============ -->
+<div class="portfolio" id="portfolio-tecnico">
+  <div class="topbar">
+    <button type="button" class="back-btn" data-back>Ver ambos perfiles</button>
+    <span class="track-label">Perfil · Técnico y administrativo — su portafolio</span>
+  </div>
+
+  <div class="sheet">
+    <section class="reveal in">
+      <img src="recursos/perfil.jpeg" alt="Foto de Daniel Esteban Albarracín González" class="profile-photo-sm" onerror="this.style.display='none'">
+      <p class="kicker">Hoja de vida</p>
+      <h1>Daniel Esteban<br>Albarracín González</h1>
+      <p class="role" id="roleText-tecnico">Programador autodidacta, oficinista y analista de datos por afición y por oficio.<span class="cursor">▌</span></p>
+      <div class="contact-strip with-rule">
+        <span>322 337 5905</span>
+        <span>Daniel.albarracín300@gmail.com</span>
+        <span>Soacha, Cundinamarca</span>
+      </div>
+    </section>
+
+    <section id="tec-perfil" class="reveal in">
+      <div class="section-head"><span class="tab">Perfil</span></div>
+      <p class="lede">Construyo programas y aplicaciones que resuelven problemas concretos. No tengo formación formal en desarrollo de software: aprendí a programar por cuenta propia, con la misma disciplina y aprendizaje constante con que hago cualquier otro oficio. Mi formación formal viene del sector salud y de la técnica agropecuaria, dos oficios donde un error tiene consecuencias reales.</p>
+      <ul class="skills">
+        <li><strong>Programación</strong>Aplicaciones y lógica de sistemas, aprendidas por cuenta propia, para resolver un problema concreto.</li>
+        <li><strong>Análisis de datos</strong>Organización y lectura de información para tomar decisiones.</li>
+        <li><strong>Ofimática y archivo</strong>Manejo de aplicativos internos, reportes y documentación.</li>
+        <li><strong>Excel</strong>Manejo avanzado: fórmulas, organización y reportes de datos.</li>
+        <li><strong>Atención al usuario</strong>Call center y servicio directo, con foco en resolver a la primera.</li>
+      </ul>
+    </section>
+
+    <section id="tec-formacion" class="reveal in">
+      <div class="section-head"><span class="tab">Formación técnica</span></div>
+      <div class="entry">
+        <div class="when">Técnico laboral</div>
+        <div class="what">
+          <strong>Auxiliar en Enfermería</strong>
+          <span class="org">MEDISED</span>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="when">Bachiller técnico</div>
+        <div class="what">
+          <strong>Sistemas Agropecuarios Ecológicos</strong>
+          <span class="org">Institución Educativa Agropecuaria Adventista del Llano — INSTIVAL</span>
+        </div>
+      </div>
+      <p class="note">La programación de aplicaciones no viene de estos títulos: la aprendí por cuenta propia, practicando fuera del aula.</p>
+    </section>
+
+    <section id="tec-experiencia" class="reveal in">
+      <div class="section-head"><span class="tab">Experiencia laboral</span></div>
+      <div class="entry">
+        <div class="when">Aprendiz SENA</div>
+        <div class="what">
+          <strong>Salud Empresarial</strong>
+          <span class="org">FAMISANAR SAS</span>
+          <p>Atención al usuario, manejo de archivo, aplicativos internos y call center.</p>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="when">Auxiliar de Enfermería</div>
+        <div class="what">
+          <strong>Atención asistencial</strong>
+          <span class="org">Medical Tallento Humano S.A.S.</span>
+          <p>Atención asistencial y servicio directo al paciente.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="tec-cursos" class="reveal in">
+      <div class="section-head"><span class="tab">Cursos y seminarios</span></div>
+      <ul class="course-list">
+        <li>Ruta del Emprendimiento — Centros del Valle del Software (54 horas)</li>
+        <li>CIE 10, cirugías y especialidades</li>
+        <li>Soporte vital avanzado</li>
+        <li>Atención prehospitalaria</li>
+        <li>Prevención y control de infecciones (PCI) COVID-19</li>
+      </ul>
+    </section>
+
+    <section id="tec-proyecto" class="reveal in">
+      <div class="section-head"><span class="tab">Proyectos técnicos</span></div>
+      <div class="project-list">
+        <div class="project">
+          <h3>Tienda Educativa</h3>
+          <p>Un sistema de puntos y canje que diseñé y armé de principio a fin: reglas claras de acumulación, un umbral de canje y una mecánica que hay que probar para que cuadre.</p>
+        </div>
+
+        <div class="project">
+          <h3>Tienda virtual de incentivos para aliados</h3>
+          <p>Construí una tienda virtual donde se entregan certificados de contribución a los aliados que apoyan el proceso educativo, con un manejo de cuentas que permite a los niños reclamar sus incentivos.</p>
+        </div>
+
+        <div class="project">
+          <h3>Herramientas de estudio</h3>
+          <p>Serie de videos que reúno como material de apoyo para repasar y reforzar los temas vistos en clase.</p>
+          <a class="project-link" href="https://www.youtube.com/playlist?list=PLO2oXZPU__jLh7xn4VfZ1Xn0oFWeGMWAR" target="_blank" rel="noopener">Ver lista de reproducción ↗</a>
+        </div>
+
+        <div class="project">
+          <h3>Sistema de estudio</h3>
+          <p>Página web y aplicación para estudiar y repasar los temas de clase.</p>
+          <a class="project-link" href="https://iglesia-getsemani.github.io/Sistemadeestudio/" target="_blank" rel="noopener">Ver aplicación ↗</a>
+        </div>
+
+        <div class="project">
+          <h3>Torneo de estudio</h3>
+          <p>Aplicación para impartir y hacer seguimiento del aprendizaje mediante torneos de estudio entre los estudiantes.</p>
+          <a class="project-link" href="https://iglesia-getsemani.github.io/Torneodeestudio/" target="_blank" rel="noopener">Ver aplicación ↗</a>
+        </div>
+
+        <div class="project">
+          <h3>Rutinas de ejercicio</h3>
+          <p>Aplicación para organizar y armar rutinas de ejercicio por días.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="tec-referencias" class="reveal in">
+      <div class="section-head"><span class="tab">Referencias</span></div>
+      <p class="lede">Toca una referencia para ver el teléfono.</p>
+      <div class="refs">
+        <div class="ref-flip"><div class="ref-card">
+          <div class="ref-face ref-front"><strong>Ruth Alejandra Albarracín González</strong><span>Auxiliar de Enfermería · Familiar</span><span class="ref-hint">toca para ver el teléfono</span></div>
+          <div class="ref-face ref-back"><span class="phone">320 395 1822</span><span class="ref-hint">toca para volver</span></div>
+        </div></div>
+        <div class="ref-flip"><div class="ref-card">
+          <div class="ref-face ref-front"><strong>Daniela Bautista</strong><span>Auxiliar de Enfermería · Familiar</span><span class="ref-hint">toca para ver el teléfono</span></div>
+          <div class="ref-face ref-back"><span class="phone">300 547 7511</span><span class="ref-hint">toca para volver</span></div>
+        </div></div>
+        <div class="ref-flip"><div class="ref-card">
+          <div class="ref-face ref-front"><strong>Paola Samboni</strong><span>Auxiliar de Enfermería · Personal</span><span class="ref-hint">toca para ver el teléfono</span></div>
+          <div class="ref-face ref-back"><span class="phone">312 593 2276</span><span class="ref-hint">toca para volver</span></div>
+        </div></div>
+        <div class="ref-flip"><div class="ref-card">
+          <div class="ref-face ref-front"><strong>Francy Aldana</strong><span>Independiente · Personal</span><span class="ref-hint">toca para ver el teléfono</span></div>
+          <div class="ref-face ref-back"><span class="phone">321 322 7593</span><span class="ref-hint">toca para volver</span></div>
+        </div></div>
+      </div>
+    </section>
+
+    <section id="tec-soportes" class="reveal in">
+      <div class="section-head"><span class="tab">Certificados y soportes</span></div>
+      <ul class="docs-list">
+        <li><a href="recursos/CERTIFICADO%20LABORAL%20DANIEL%20ESTEBAN%20ALBARRACIN%20GONZALEZ.pdf" target="_blank" rel="noopener">Certificado laboral</a></li>
+        <li><a href="recursos/CC%201007107862%20Certificado%20de%20estudio.pdf" target="_blank" rel="noopener">Certificado de estudio — Licenciatura en Educación Religiosa</a></li>
+        <li><a href="recursos/Acta%20de%20grado%20tecnico%20Emprendedor%201.pdf" target="_blank" rel="noopener">Acta de grado técnico — Auxiliar de Enfermería</a></li>
+        <li><a href="recursos/Certificado_CVS_ACTO%20(1).pdf" target="_blank" rel="noopener">Certificado de emprendedor</a></li>
+        <li><a href="recursos/Constancia%20de%20registro.pdf" target="_blank" rel="noopener">Constancia de registro</a></li>
+        <li><a href="recursos/1007107862-03082019131540.pdf" target="_blank" rel="noopener">Cédula de ciudadanía</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <footer class="page-footer">
+    <span>Daniel Esteban Albarracín González</span>
+    <span>Soacha, Cundinamarca — Colombia</span>
+  </footer>
+</div>
+
+<!-- ============ ANEXO COMPLETO (modal) ============ -->
+<div class="anexo-overlay" id="anexoOverlay" aria-hidden="true">
+  <div class="anexo-modal" role="dialog" aria-modal="true" aria-labelledby="anexoTitle">
+    <div class="anexo-head">
+      <h2 id="anexoTitle">Estudios y experiencia</h2>
+      <button type="button" class="anexo-close" id="anexoClose" aria-label="Cerrar anexo">✕</button>
+    </div>
+    <div class="anexo-body" id="anexoBody"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const body = document.body;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- canvas particle background ---------- */
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+  const mouse = {x:-9999, y:-9999};
+
+  function sizeCanvas(){ W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  sizeCanvas();
+  window.addEventListener('resize', () => { sizeCanvas(); buildParticles(); });
+  window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+  window.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+  function currentMode(){ return body.getAttribute('data-mode') || 'neutral'; }
+
+  function palette(){
+    if(currentMode() === 'educador') return {colors:['#B9862F','#E7D2A0','#2F4438'], link:false};
+    if(currentMode() === 'tecnico') return {colors:['#49C6B4','#7FE0D3','#E0A458'], link:true};
+    return {colors:['#5B3A29','#C9B48C'], link:false};
+  }
+
+  function buildParticles(){
+    const count = reduced ? 0 : Math.min(70, Math.floor((W*H)/22000));
+    particles = Array.from({length:count}, () => ({
+      x: Math.random()*W, y: Math.random()*H,
+      vx: (Math.random()-.5)*.25, vy: (Math.random()-.5)*.25 - .05,
+      r: Math.random()*1.8 + .8
+    }));
+  }
+  buildParticles();
+
+  function step(){
+    ctx.clearRect(0,0,W,H);
+    const pal = palette();
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      const dx = p.x - mouse.x, dy = p.y - mouse.y;
+      const d2 = dx*dx + dy*dy;
+      if(d2 < 6000){ const f = (6000-d2)/6000*0.03; p.x += dx*f; p.y += dy*f; }
+      if(p.x < -10) p.x = W+10; if(p.x > W+10) p.x = -10;
+      if(p.y < -10) p.y = H+10; if(p.y > H+10) p.y = -10;
+    });
+    if(pal.link){
+      for(let i=0;i<particles.length;i++){
+        for(let j=i+1;j<particles.length;j++){
+          const a = particles[i], b = particles[j];
+          const dx=a.x-b.x, dy=a.y-b.y, d = Math.sqrt(dx*dx+dy*dy);
+          if(d < 120){
+            ctx.strokeStyle = pal.colors[0];
+            ctx.globalAlpha = (1 - d/120) * 0.25;
+            ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+          }
+        }
+      }
+    }
+    particles.forEach((p,i) => {
+      ctx.globalAlpha = pal.link ? 0.85 : 0.35;
+      ctx.fillStyle = pal.colors[i % pal.colors.length];
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+    if(!reduced) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+
+  /* ---------- text scramble, once per portfolio entry ---------- */
+  const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  function scrambleTo(el, text){
+    if(!el) return;
+    if(reduced){ el.firstChild.textContent = text; return; }
+    let progress = 0;
+    const totalSteps = 18;
+    const len = text.length;
+    function frame(){
+      progress++;
+      let out = '';
+      for(let i=0;i<len;i++){
+        out += (progress/totalSteps > i/len) ? text[i] : chars[Math.floor(Math.random()*chars.length)];
+      }
+      el.firstChild.textContent = out;
+      if(progress < totalSteps){ requestAnimationFrame(frame); } else { el.firstChild.textContent = text; }
+    }
+    frame();
+  }
+
+  /* ---------- fork -> portfolio switching ---------- */
+  const forkPanels = Array.from(document.querySelectorAll('.fork-panel'));
+  const backBtns = Array.from(document.querySelectorAll('[data-back]'));
+
+  function enter(mode){
+    body.setAttribute('data-mode', mode);
+    window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+    const roleEl = document.getElementById('roleText-' + mode);
+    if(roleEl){
+      const original = roleEl.firstChild.textContent;
+      roleEl.firstChild.textContent = original;
+      scrambleTo(roleEl, original);
+    }
+  }
+  function leave(){
+    body.removeAttribute('data-mode');
+    window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+  }
+
+  forkPanels.forEach(p => p.addEventListener('click', () => enter(p.dataset.enter)));
+  backBtns.forEach(b => b.addEventListener('click', leave));
+
+  /* ---------- scroll progress rail ---------- */
+  const railFill = document.getElementById('railFill');
+  function onScroll(){
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+    railFill.style.height = pct + '%';
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  /* ---------- reference flip cards ---------- */
+  document.querySelectorAll('.ref-flip').forEach(el => {
+    el.setAttribute('tabindex','0');
+    el.setAttribute('role','button');
+    el.addEventListener('click', () => el.classList.toggle('flipped'));
+    el.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); el.classList.toggle('flipped'); }});
+  });
+
+  /* ---------- Anexo completo: formación, experiencia y soportes, sin discriminar ---------- */
+  const anexoData = [
+    {
+      title: 'Formación académica y técnica',
+      items: [
+        { when:'En curso', strong:'Pedagogía', org:'Universidad Pedagógica Nacional',
+          desc:'Estudios en curso orientados a la práctica docente: observación didáctica, diseño de ambientes de aprendizaje y manejo de grupos en básica primaria.',
+          links:[
+            { href:'recursos/Notas%20Upn.pdf', label:'Ver notas académicas (PDF)' },
+            { href:'recursos/Constancia%20de%20registro.pdf', label:'Ver constancia de registro (PDF)' }
+          ] },
+        { when:'Base formativa', strong:'Licenciatura en Educación Religiosa', org:'Corporación Universitaria Adventista',
+          desc:'Formación previa que sentó la base pedagógica antes de iniciar Pedagogía en la UPN.',
+          link:'recursos/CC%201007107862%20Certificado%20de%20estudio.pdf', linkLabel:'Ver certificado de estudio (PDF)' },
+        { when:'Técnico laboral', strong:'Auxiliar en Enfermería', org:'MEDISED',
+          desc:'Formación técnica en salud: procedimientos asistenciales, atención directa al paciente y manejo de protocolos clínicos.',
+          link:'recursos/Acta%20de%20grado%20tecnico%20Emprendedor%201.pdf', linkLabel:'Ver acta de grado (PDF)' },
+        { when:'Bachiller técnico', strong:'Sistemas Agropecuarios Ecológicos', org:'Institución Educativa Agropecuaria Adventista del Llano — INSTIVAL',
+          desc:'Formación técnica agropecuaria de nivel bachillerato, base del rigor y la disciplina de trabajo aplicados hoy a otros oficios.' }
+      ]
+    },
+    {
+      title: 'Experiencia laboral',
+      items: [
+        { when:'Aprendiz SENA', strong:'Salud Empresarial', org:'FAMISANAR SAS',
+          desc:'Atención al usuario, manejo de archivo, aplicativos internos y call center.',
+          link:'recursos/CERTIFICADO%20LABORAL%20DANIEL%20ESTEBAN%20ALBARRACIN%20GONZALEZ.pdf', linkLabel:'Ver certificado laboral (PDF)' },
+        { when:'Auxiliar de Enfermería', strong:'Atención asistencial', org:'Medical Tallento Humano S.A.S.',
+          desc:'Atención asistencial y servicio directo al paciente en el sector salud.' }
+      ]
+    },
+    {
+      title: 'Cursos y seminarios',
+      items: [
+        { strong:'Ruta del Emprendimiento', org:'Centros del Valle del Software (54 horas)',
+          desc:'Formación en emprendimiento aplicada al diseño del proyecto Tienda Educativa.',
+          link:'recursos/Certificado_CVS_ACTO%20(1).pdf', linkLabel:'Ver certificado (PDF)' },
+        { strong:'CIE 10, cirugías y especialidades', desc:'Curso del área de salud sobre codificación clínica, procedimientos quirúrgicos y especialidades médicas.' },
+        { strong:'Soporte vital avanzado', desc:'Formación en maniobras y protocolos de reanimación y soporte vital.' },
+        { strong:'Atención prehospitalaria', desc:'Formación en atención de urgencias y traslado de pacientes fuera del entorno hospitalario.' },
+        { strong:'Prevención y control de infecciones (PCI) COVID-19', desc:'Protocolos de bioseguridad y control de infecciones aplicados durante la pandemia.' }
+      ]
+    },
+    {
+      title: 'Certificados y soportes de identificación',
+      items: [
+        { strong:'Cédula de ciudadanía', desc:'Documento de identificación personal.',
+          link:'recursos/1007107862-03082019131540.pdf', linkLabel:'Ver documento (PDF)' }
+      ]
+    }
+  ];
+
+  const anexoOverlay = document.getElementById('anexoOverlay');
+  const anexoBody = document.getElementById('anexoBody');
+  const anexoClose = document.getElementById('anexoClose');
+  let anexoBuilt = false;
+
+  function buildAnexo(){
+    if(anexoBuilt) return;
+    anexoBody.innerHTML = anexoData.map(group => {
+      const itemsHtml = group.items.map(it => `
+        <div class="anexo-item">
+          ${it.when ? `<span class="when">${it.when}</span>` : ''}
+          <strong>${it.strong}</strong>
+          ${it.org ? `<span class="org">${it.org}</span>` : ''}
+          <p>${it.desc}</p>
+          ${it.link ? `<a class="anexo-doclink" href="${it.link}" target="_blank" rel="noopener">${it.linkLabel || 'Ver documento (PDF)'} ↗</a>` : ''}
+          ${it.links ? it.links.map(l => `<a class="anexo-doclink" href="${l.href}" target="_blank" rel="noopener">${l.label} ↗</a>`).join('') : ''}
+        </div>`).join('');
+      return `<div class="anexo-group"><p class="anexo-group-title">${group.title}</p>${itemsHtml}</div>`;
+    }).join('');
+    anexoBuilt = true;
+  }
+
+  function openAnexo(){
+    buildAnexo();
+    anexoOverlay.classList.add('open');
+    anexoOverlay.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeAnexo(){
+    anexoOverlay.classList.remove('open');
+    anexoOverlay.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('[data-anexo-open]').forEach(btn => {
+    btn.addEventListener('click', openAnexo);
+  });
+  anexoClose.addEventListener('click', closeAnexo);
+  anexoOverlay.addEventListener('click', e => { if(e.target === anexoOverlay) closeAnexo(); });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape' && anexoOverlay.classList.contains('open')) closeAnexo(); });
+})();
+</script>
+</body>
+</html>
